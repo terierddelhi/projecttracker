@@ -131,7 +131,7 @@ const SupaService = {
   loadAllData: async function () {
     const [profilesRes, projectsRes, teamRes, tasksRes, risksRes, activityRes, financialsRes] =
       await Promise.all([
-        this.client.from('profiles').select('email, name, dept, designation'),
+        this.client.from('profiles').select('email, name, dept, designation, role'),
         this.client.from('projects').select('*'),
         this.client.from('project_team').select('*'),
         this.client.from('tasks').select('*'),
@@ -147,7 +147,8 @@ const SupaService = {
       id: p.email,           // EmpPortal keys employees by `id`; we use email as that id
       name: p.name,
       dept: p.dept,
-      designation: p.designation
+      designation: p.designation,
+      role: p.role
     }));
 
     const teamByProject = {};
