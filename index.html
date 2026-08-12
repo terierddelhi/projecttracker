@@ -1457,7 +1457,11 @@ const EmpPortal = {
             this.load();
         }
         this.populateEmployeeSelect();
-        this.resetWizard();
+        try {
+            this.resetWizard();
+        } catch (e) {
+            console.error('resetWizard failed during init (non-fatal):', e);
+        }
         this.bindNavigation();
         this.applyAdminNavVisibility();
     },
@@ -2869,7 +2873,10 @@ const EmpPortal = {
             if (el) el.innerHTML = '';
         });
         const piField = document.getElementById('wiz-pi');
-        if (piField) piField.value = this.currentEmployee().name;
+        if (piField) {
+            const emp = this.currentEmployee();
+            piField.value = emp ? emp.name : '';
+        }
 
         const coPiSel = document.getElementById('wiz-copi-select');
         if (coPiSel) {
